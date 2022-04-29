@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "cypress": "cypress open"
   },
   "dependencies": {
     "classnames": "2.3.1",
@@ -17,6 +18,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",
+    "cypress": "^9.6.0",
     "postcss": "^8.4.7",
     "tailwindcss": "^3.0.23"
   }

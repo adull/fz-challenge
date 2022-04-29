@@ -1,5 +1,18 @@
 For the Firezone Challenge instructions: See [INSTRUCTIONS.md](INSTRUCTIONS.md).
 
+# Adlai's Thoughts
+
+Really interesting challenge! Was pretty lost at first wasn't sure how I would tackle it, initially started looking into if I could handle the ReferenceError issue with [SWR](https://swr.vercel.app/) by just passing `useSWR` a promise that tried to resolve any variable, but decided this was overkill and instead went with a solution where I created a custom [ErrorBoundary](https://reactjs.org/docs/error-boundaries.html) that works with SSR simply by using `ReactDOM.renderToStaticMarkup(props.children)`. This component can be found underneath `/src/components/error-boundary.js`.
+
+Even this solution doesn't feel *perfect* though, because this requires you to have to wrap individual components with the custom error boundary. This kind of defeats the purpose - if you know *where* the error is, then at that point you can go in and fix the bug. However, similarly, NextJS's stack trace tells you where the typo is anyways. Also in this case because there were two instances of `<PostTitle>` (in `[slug].js` and `post-header.js`), I had to add the `<CustomErrorBoundary>` in two places which would likely cause bugs/headaches down the road. Obviously I could have created another component that specifically wraps `<PostTitle>` in `<CustomErrorBoundary>` but that felt like overkill for this challenge, especially since `<PostTitle>` is already so thin. 
+
+I went with Cypress as a testing library because it's at the top of NextJS's [testing page](https://nextjs.org/docs/testing) in their docs. Maybe Cypress paid them to get that first place placement, but I tried it out and it was pretty easy to use. I had initially tried to use Jest but there was some [difficulty with Jest compiling js from md](https://github.com/remarkjs/remark/discussions/814). Trying to fix compatibility issues between Jest/MD felt like a losing battle so I changed the tools I used and Cypress worked pretty well and had a pretty cool UI for testing. My only issue with Cypress is that it uses Chai assertions and the tests just stopping after one failure. Some people on [stackoverflow recommended](https://stackoverflow.com/questions/66132293/how-can-i-use-soft-assertion-in-cypress) using some npm package with 8k weekly downloads, and I have a rule that I don't install NPM packages with less than 100k wkly downloads after 5PM lol. 
+
+You can run the Test by running `npm run cypress` and then clicking on `h_one.js`. More info on running cypress tests [here](https://nextjs.org/docs/testing#running-your-cypress-tests).
+
+Thanks for considering me!
+
+
 # A statically generated blog example using Next.js and Markdown
 
 This example showcases Next.js's [Static Generation](https://nextjs.org/docs/basic-features/pages) feature using Markdown files as the data source.
